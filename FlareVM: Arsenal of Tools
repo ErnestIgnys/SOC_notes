@@ -1,0 +1,346 @@
+🔬 TryHackMe – FlareVM Notes
+📌 Introduction
+
+FlareVM (Forensics, Logic Analysis, and Reverse Engineering) to specjalistyczna maszyna wirtualna zawierająca zestaw narzędzi dla:
+
+Reverse Engineers
+
+Malware Analysts
+
+Incident Responders
+
+Forensic Investigators
+
+Penetration Testers
+
+Została stworzona przez FLARE Team (FireEye) jako środowisko „all-in-one” do analizy malware i śledztw cyfrowych.
+
+🧰Categories of Tools in FlareVM
+1️⃣ Reverse Engineering & Debugging
+
+Reverse engineering = rozkładanie gotowego programu, aby zrozumieć jak działa.
+Debugging = analiza błędów i zachowania programu w trakcie działania.
+
+Tool	Description
+Ghidra	Open-source reverse engineering suite
+x64dbg	Debugger dla x64 i x32
+OllyDbg	Debugger assembly-level
+Radare2	Zaawansowana platforma RE
+Binary Ninja	Disassembler & decompiler
+PEiD	Wykrywanie packerów i kompilatorów
+2️⃣ Disassemblers & Decompilers
+
+Umożliwiają analizę malware poprzez rozbijanie pliku wykonywalnego na czytelną formę.
+
+Tool	Purpose
+CFF Explorer	Edytor plików PE
+Hopper	Debugger + Disassembler + Decompiler
+RetDec	Open-source decompiler
+3️⃣ Static & Dynamic Analysis
+
+Static Analysis → analiza bez uruchamiania pliku
+
+Dynamic Analysis → obserwacja zachowania podczas działania
+
+Tool	Purpose
+Process Hacker	Monitor procesów
+PEview	Viewer PE
+Dependency Walker	Analiza DLL dependencies
+DIE	Detect It Easy (packer detection)
+4️⃣ Forensics & Incident Response
+Tool	Purpose
+Volatility	Analiza RAM dump
+Rekall	Memory forensics
+FTK Imager	Tworzenie obrazów dysku
+5️⃣ Network Analysis
+Tool	Purpose
+Wireshark	Analiza ruchu sieciowego
+Nmap	Skanowanie sieci
+Netcat	Praca z połączeniami TCP/UDP
+6️⃣ File Analysis
+Tool	Purpose
+FileInsight	Edycja plików binarnych
+Hex Fiend	Hex editor
+HxD	Hex editor (Windows)
+7️⃣ Scripting & Automation
+Tool	Purpose
+Python	Automatyzacja
+PowerShell Empire	Post-exploitation framework
+8️⃣ Sysinternals Suite
+Tool	Purpose
+Autoruns	Co uruchamia się przy starcie
+Process Explorer	Zaawansowany menedżer procesów
+Process Monitor	Monitorowanie aktywności systemu
+🔎 Core Investigation Tools (Used in This Room)
+Tool	Investigative Value
+Procmon	Monitor system activity
+Process Explorer	Parent-child process analysis
+HxD	Hex analysis
+Wireshark	Network traffic inspection
+CFF Explorer	Hash generation & PE info
+PEStudio	Static executable analysis
+FLOSS	Extract & deobfuscate strings
+🛠 Tool Deep Dive
+🔹 Process Monitor (Procmon)
+
+Monitoruje w czasie rzeczywistym:
+
+File system activity
+
+Registry activity
+
+Process/Thread activity
+
+🔎 Example: LSASS Monitoring
+
+lsass.exe = Local Security Authority Subsystem Service
+Odpowiada za uwierzytelnianie.
+
+⚠ Jeśli widzimy:
+
+Nietypowe procesy czytające pamięć LSASS
+
+Dostęp do LSASS przez nieznane procesy
+
+Może to oznaczać credential dumping (np. Mimikatz).
+
+🔹 Process Explorer
+
+Zaawansowana analiza procesów:
+
+Parent-child relationships
+
+Loaded DLLs
+
+Path do pliku
+
+User context
+
+Przydatne do wykrywania:
+
+Makr Word uruchamiających PowerShell
+
+LNK files spawnujących cmd
+
+ISO / malicious droppers
+
+🔹 HxD (Hex Editor)
+
+Pozwala analizować pliki binarne w hex.
+
+🔎 Example
+
+Plik zaczyna się od:
+
+4D 5A
+
+
+To oznacza nagłówek MZ → plik wykonywalny PE.
+
+Możemy:
+
+Sprawdzić strukturę
+
+Szukać ukrytych danych
+
+Wykryć manipulacje
+
+🔹 CFF Explorer
+
+Analiza plików PE:
+
+MD5
+
+SHA-1
+
+Timestamp
+
+Architecture (x86/x64)
+
+Przykład:
+
+64-bit PE
+
+Generated: 23 September 2024
+
+Hash verification (VirusTotal lookup)
+
+🔹 Wireshark
+
+Analiza ruchu sieciowego:
+
+Source IP
+
+Destination IP
+
+Port
+
+Protocol
+
+W przykładzie:
+
+TLSv1.2
+
+TCP
+
+Encrypted traffic
+
+⚠ Malware często używa TLS do ukrycia C2 communication.
+
+🔹 PEStudio (Static Analysis)
+
+Analiza bez uruchamiania pliku.
+
+Sprawdza:
+
+Entropy (czy plik jest spakowany)
+
+Imports
+
+Strings
+
+Metadata
+
+Indicators
+
+Example: PsExec
+
+Entropy: 6.596
+
+Wysoka entropia → możliwe:
+
+Packing
+
+Encryption
+
+Obfuscation
+
+PsExec = dual-use tool:
+
+Legit (admin)
+
+Abuse (lateral movement)
+
+🔹 FLOSS
+
+FLARE Obfuscated String Solver
+
+Extracts:
+
+Static strings
+
+Stack strings
+
+Tight strings
+
+Decoded strings
+
+Example output:
+
+189 static strings extracted
+
+No decoded strings detected
+
+Może ujawnić:
+
+C2 URLs
+
+IP addresses
+
+Registry keys
+
+Encryption keys
+
+🧪 Practical Investigation – windows.exe
+🕵 Scenario
+
+User downloaded:
+
+windows.exe
+Date: 09/24/2024 03:43 AM
+Location: C:\Users\Administrator\Desktop\Sample
+
+
+Flagged as suspicious.
+
+🔎 Step 1 – Static Analysis (PEStudio)
+Hashes:
+
+MD5: 9FDD4767DE5AEC8E577C1916ECC3E1D6
+
+SHA-1: A1BC55A7931BFCD24651357829C460FD3DC4828F
+
+→ Should be checked on VirusTotal.
+
+🚩 Red Flags
+
+Claims to be:
+
+Windows Registry Editor (REGEDIT)
+
+Location:
+
+User directory
+
+
+❌ Legit REGEDIT znajduje się w:
+
+C:\Windows\System32
+
+
+Russian metadata:
+
+"Редактор реестра"
+
+
+Jeśli organizacja nie działa w rosyjskim środowisku → suspicious.
+
+No Rich Header
+→ możliwe:
+
+Packing
+
+Obfuscation
+
+Anti-analysis techniques
+
+🎯 Learning Objectives
+
+Zrozumienie środowiska FlareVM
+
+Static vs Dynamic Analysis
+
+Analiza procesów Windows
+
+Identyfikacja podejrzanych executable
+
+Extracting hidden strings
+
+⚠️ Important Disclaimer
+
+FlareVM zawiera prawdziwe próbki malware.
+
+NIGDY:
+
+Nie pobieraj ich poza VM
+
+Nie uruchamiaj na host systemie
+
+Nie udostępniaj plików
+
+Analiza tylko w:
+
+Isolated
+
+Controlled
+
+Offline environment
+
+🧠 Key Takeaways
+
+✔ FlareVM = kompletne środowisko malware analysis
+✔ Static analysis = pierwszy krok
+✔ Entropy + metadata = duże red flagi
+✔ LSASS monitoring = credential theft detection
+✔ Parent-child process relationships = kluczowe
+✔ TLS traffic ≠ safe traffic

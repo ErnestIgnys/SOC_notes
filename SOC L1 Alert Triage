@@ -1,0 +1,283 @@
+Cel pokoju
+
+Zrozumienie czym jest alert w SOC, jak powstaje, jakie ma właściwości oraz jak poprawnie przeprowadzić alert triage jako analityk SOC L1.
+
+Learning Objectives
+
+Zrozumienie koncepcji alertu w SOC
+
+Poznanie pól, statusów i klasyfikacji alertów
+
+Nauka alert triage jako L1
+
+Praktyka z realistycznymi alertami i workflow SOC
+
+Przygotowanie do SOC Simulator i SAL1
+
+Wymagania wstępne
+
+Znajomość typowych ataków na sieci, Windows i Linux
+
+Znajomość ról SOC, szczególnie L1
+
+Czym jest alert?
+
+Alert to powiadomienie generowane przez system bezpieczeństwa (np. SIEM, EDR), gdy wystąpi określone zdarzenie lub sekwencja zdarzeń uznanych za podejrzane.
+
+Alert istnieje po to, aby analityk nie musiał przeglądać milionów logów dziennie — system filtruje je i wskazuje tylko potencjalne zagrożenia.
+
+Od zdarzenia do alertu
+
+Proces powstawania alertu:
+
+Występuje zdarzenie (event), np.:
+
+logowanie użytkownika
+
+uruchomienie procesu
+
+pobranie pliku
+
+System (OS, firewall, chmura) loguje zdarzenie.
+
+Logi są przesyłane do systemu bezpieczeństwa (SIEM / EDR).
+
+Reguła detekcji analizuje logi.
+
+Jeśli spełnione są warunki reguły → generowany jest alert.
+
+Platformy do zarządzania alertami
+SIEM
+
+Przykłady:
+
+Splunk Enterprise Security
+
+Elastic Security
+
+Centralizują logi i zarządzają alertami.
+
+EDR / NDR
+
+Przykłady:
+
+Microsoft Defender for Endpoint
+
+CrowdStrike Falcon
+
+Dostarczają własne alerty endpointowe lub sieciowe.
+
+SOAR
+
+Przykłady:
+
+Splunk SOAR
+
+Cortex XSOAR
+
+Automatyzują reakcję i agregują alerty z wielu systemów.
+
+ITSM
+
+Przykłady:
+
+Jira
+
+TheHive
+
+Służą do zarządzania zgłoszeniami i incydentami.
+
+Rola SOC L1 w alert triage
+
+SOC L1 to pierwsza linia obrony.
+
+Zadania:
+
+Przegląd alertów
+
+Odróżnienie True Positive od False Positive
+
+Eskalacja realnych zagrożeń do L2
+
+Inne role:
+
+L2 – głębsza analiza i remediacja
+
+SOC Engineer – tworzenie i poprawa reguł detekcji
+
+SOC Manager – nadzór nad jakością i czasem reakcji
+
+Właściwości alertu
+
+Typowe pola alertu:
+
+Alert Time
+Czas wygenerowania alertu (może różnić się od czasu zdarzenia).
+
+Alert Name
+Nazwa reguły detekcji, np.:
+
+Unusual Login Location
+
+Windows RDP Bruteforce
+
+Potential Data Exfiltration
+
+Alert Severity
+Określa priorytet:
+
+Low
+
+Medium
+
+High
+
+Critical
+
+Alert Status
+Status obsługi:
+
+New
+
+In Progress
+
+Closed
+
+Alert Verdict
+Klasyfikacja:
+
+True Positive
+
+False Positive
+
+Alert Assignee
+Analityk odpowiedzialny za alert.
+
+Alert Description
+Opis:
+
+logika reguły
+
+dlaczego to może być atak
+
+wskazówki triage
+
+Alert Fields
+Szczegóły techniczne:
+
+hostname
+
+user
+
+command line
+
+IP address
+
+Alert Prioritisation
+
+Gdy w kolejce jest wiele alertów, należy je odpowiednio wybrać.
+
+1. Filtruj
+
+Nie bierz alertów już przypisanych
+
+Wybieraj tylko nowe i nierozwiązane
+
+2. Sortuj po severity
+
+Najpierw:
+
+Critical
+
+High
+
+Medium
+
+Low
+
+3. Sortuj po czasie
+
+Zaczynaj od najstarszych alertów — potencjalny atak może już trwać.
+
+Alert Triage – krok po kroku
+
+Alert triage to proces analizy alertu.
+
+1. Initial Actions
+
+Przypisz alert do siebie
+
+Zmień status na In Progress
+
+Zapoznaj się z nazwą i opisem
+
+Zidentyfikuj kluczowe wskaźniki
+
+2. Investigation
+
+Najważniejszy etap.
+
+Sprawdź:
+
+Kto jest dotknięty? (user, host, system)
+
+Jaka akcja wystąpiła? (logowanie, malware, phishing)
+
+Czy są powiązane zdarzenia przed/po alertcie?
+
+Czy IOC występują w bazach threat intelligence?
+
+W wielu zespołach używa się:
+
+playbooków
+
+runbooków
+
+workbooków
+
+Jeśli brak instrukcji, stosuj logiczną analizę kontekstu.
+
+3. Final Actions
+
+Określ verdict:
+
+True Positive
+
+False Positive
+
+Napisz szczegółowy komentarz:
+
+co sprawdziłeś
+
+jakie logi przeanalizowałeś
+
+jakie były wyniki
+
+dlaczego taki verdict
+
+Zmień status na Closed.
+
+Najważniejsze zasady L1
+
+Nie zgaduj
+
+Nie zamykaj alertu bez analizy
+
+Nie eskaluj bez wykonania podstawowej pracy
+
+Dokumentuj wszystko
+
+False Positive kosztuje czas.
+Missed incident może kosztować firmę miliony.
+
+Kluczowe wnioski
+
+Alert to efekt działania reguły detekcji na logach.
+
+L1 odpowiada za pierwszą analizę i filtrowanie noise.
+
+Priorytetyzacja jest kluczowa przy dużej liczbie alertów.
+
+Dokumentacja analizy jest tak samo ważna jak sam verdict.
+
+Triage to proces metodyczny, nie intuicyjny.

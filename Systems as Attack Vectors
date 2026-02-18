@@ -1,0 +1,216 @@
+TryHackMe – Systems as Attack Vectors (SOC Analyst)
+Cel pokoju
+
+Kontynuacja nauki roli SOC w ochronie organizacji, tym razem skupiona na systemach jako wektorach ataku.
+
+Learning Objectives
+
+Zrozumienie roli systemów w nowoczesnym świecie cyfrowym
+
+Poznanie realnych ataków wymierzonych w systemy
+
+Przećwiczenie wiedzy w realistycznych scenariuszach SOC
+
+Wymagania wstępne
+
+Junior Security Analyst
+
+Humans as Attack Vectors
+
+System jako cel ataku
+
+Nawet jeśli użytkownicy są dobrze przeszkoleni (np. rozpoznają phishing), słabo zabezpieczony system może zostać bezpośrednio zaatakowany.
+
+Jeśli zabezpieczenia infrastruktury są słabe, umiejętności użytkowników nie mają znaczenia — atakujący ominie człowieka i uderzy bezpośrednio w system.
+
+Czym jest system?
+
+System to:
+
+fizyczny serwer
+
+maszyna wirtualna
+
+środowisko chmurowe (np. Microsoft 365)
+
+laptop pracownika
+
+Systemy przechowują dane i zapewniają dostęp do usług. Ich kompromitacja często oznacza dostęp do wielu użytkowników jednocześnie.
+
+Wartość systemu dla atakującego
+Zaatakowany system	Potencjalna wartość dla atakującego
+Laptop ucznia	Kradzież konta Steam + botnet
+Laptop admina banku	Dostęp do systemów bankowych
+Serwer pocztowy kancelarii	Kradzież wszystkich maili + szantaż
+Serwer przemysłowy	Ransomware całej sieci
+Panel strony rządowej	Defacement
+
+Kompromitacja pojedynczego konta to ograniczone szkody. Kompromitacja serwera daje skalę.
+
+Jak atakowane są systemy?
+1. Human-Led Attacks
+
+Atak często rozpoczyna się od użytkownika.
+
+Przykłady:
+
+Włożenie złośliwego USB (np. Rubber Ducky)
+
+Pobranie zainfekowanego oprogramowania
+
+Używanie słabych lub powtarzanych haseł
+
+81% naruszeń bezpieczeństwa wiąże się ze skradzionymi hasłami.
+
+2. Vulnerabilities (Luki w oprogramowaniu)
+
+Każde oprogramowanie zawiera błędy.
+
+W 2024 roku opublikowano ponad 40 000 podatności
+
+Ponad 300 było aktywnie wykorzystywanych w atakach
+
+Zero-Day
+
+Podatność znaleziona przez atakującego przed jej publicznym ujawnieniem.
+
+Po ujawnieniu luka otrzymuje numer CVE (Common Vulnerabilities and Exposures).
+
+Przykłady znanych podatności:
+
+EternalBlue
+
+PrintNightmare
+
+Follina
+
+Shellshock
+
+Reagowanie na podatności
+
+Podstawową odpowiedzią na CVE jest aktualizacja (patch).
+
+Dodatkowe działania:
+
+Ograniczenie dostępu do zaufanych adresów IP
+
+Wdrożenie tymczasowych zaleceń producenta
+
+Blokowanie wzorców ataku na IPS/WAF
+
+Monitorowanie logów pod kątem exploitów
+
+3. Supply Chain Attack
+
+Atak na łańcuch dostaw polega na kompromitacji aplikacji lub biblioteki, która następnie aktualizuje się u wielu użytkowników.
+
+Przykłady:
+
+SolarWinds attack
+
+3CX supply chain attack
+
+Problem polega na tym, że organizacja nie ma pełnej kontroli nad wszystkimi zależnościami używanego oprogramowania.
+
+SOC musi być gotowy na:
+
+wykrywanie anomalii
+
+analizę IOC
+
+izolację zagrożonych systemów
+
+Misconfigurations (Błędna konfiguracja)
+
+To nie błąd w kodzie, lecz nieprawidłowe ustawienie systemu.
+
+Przykłady:
+
+Hasło „123456”
+
+Publicznie wystawiona baza danych
+
+Publiczny bucket w chmurze
+
+Domyślne hasła
+
+Typowy scenariusz:
+
+Admin ustawia słabe hasło
+
+Wystawia usługę do Internetu
+
+Atakujący odnajduje ją poprzez skanowanie
+
+Dochodzi do wycieku danych
+
+Reagowanie na błędną konfigurację
+
+Nie wymaga aktualizacji, lecz poprawnej konfiguracji.
+
+Metody prewencji:
+
+Penetration Testing
+
+Vulnerability Scanning
+
+Configuration Audits (np. zgodność z benchmarkami CIS)
+
+Edukacja działu IT
+
+Rola SOC – Mitigation + Detection
+
+Atakujący nie rozróżniają ataku na człowieka i ataku na system.
+
+Dlatego ochrona musi obejmować oba obszary.
+
+Zagrożenie	Obrona
+Luka w systemie	Patch
+Malware	Antivirus
+Niewykryty atak	Monitoring SOC
+Najważniejsze mechanizmy ochrony
+Mechanizm	Opis
+Patch Management	Regularne aktualizacje
+Szkolenia IT	Zmniejszenie ryzyka błędnych konfiguracji
+Network Protection	Ograniczenie dostępu do systemów
+Antivirus	Wykrywanie i blokowanie malware
+Monitoring SOC	Analiza logów i reagowanie na incydenty
+Lab – Practice
+
+W labie należało:
+
+Zidentyfikować Systems at Risk
+
+Wybrać odpowiednie działania w Remediation Plan
+
+Zdobyć flagi i odpowiedzieć na pytania
+
+Ćwiczenie symuluje realną pracę SOC:
+
+identyfikacja ryzyka
+
+dobór środków ochrony
+
+analiza sytuacyjna
+
+Warto śledzić
+
+CISA – Known Exploited Vulnerabilities Catalog
+
+The DFIR Report – analizy realnych włamań
+
+BleepingComputer – aktualne ataki
+
+Check Point – Live Cyber Threat Map
+
+Kluczowe wnioski
+
+Systemy są równie ważne jak użytkownicy.
+
+Większość ataków zaczyna się od uzyskania dostępu do systemu.
+
+Patchowanie i poprawna konfiguracja to podstawa bezpieczeństwa.
+
+Supply chain to rosnące zagrożenie.
+
+SOC łączy prewencję, detekcję i współpracę z działem IT.

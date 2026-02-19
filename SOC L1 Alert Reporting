@@ -1,0 +1,150 @@
+SOC L1 – Alert Reporting, Escalation & Communication
+Learning Objectives
+Po ukończeniu pokoju powinienem:
+Rozumieć, dlaczego raportowanie i eskalacja alertów są kluczowe
+Umieć pisać profesjonalne komentarze / raporty alertów
+Znać zasady eskalacji i dobre praktyki komunikacyjne
+Umieć zastosować wiedzę w SOC Simulator
+Czuć się pewniej przed certyfikacją SAL1
+
+Ścieżka alertu w SOC
+L1 otrzymuje alert w:
+SIEM
+EDR
+Systemie ticketowym
+Większość alertów:
+False Positive – zamykane
+True Positive – obsługiwane na L1 lub eskalowane
+Tylko niewielka część:
+trafia do L2
+jeszcze mniejsza do DFIR
+
+Alert Reporting
+Czym jest raportowanie?
+Przed zamknięciem lub eskalacją alertu należy go udokumentować.
+W przypadku True Positive raport jest obowiązkowy, ponieważ
+L2 musi wiedzieć, co już sprawdziłeś
+oszczędza to czas analizy
+zachowuje kontekst na przyszłość
+
+Dlaczego raporty są tak ważne?
+Cel	Wyjaśnienie
+Kontekst dla L2	L2 szybciej rozumie sytuację
+Archiwizacja	Logi SIEM są przechowywane 3–12 miesięcy, alerty – bezterminowo
+Rozwój umiejętności	Jeśli nie potrafisz tego wyjaśnić, nie rozumiesz tego w pełni
+
+Format raportu – metoda 5W
+Każdy raport powinien zawierać:
+Who – kto?
+What – co się stało?
+When – kiedy?
+Where – gdzie?
+Why – dlaczego (najważniejsze!)
+
+2. Alert Escalation
+Kiedy eskalować do L2?
+Eskaluj jeśli:
+alert wskazuje na poważny atak
+potrzebne są działania naprawcze (malware removal, izolacja hosta, reset hasła)
+wymagany jest kontakt z klientem / zarządem / policją
+nie rozumiesz w pełni alertu
+Lepiej zapytać niż zamknąć coś, czego nie rozumiesz.
+
+Kroki eskalacji
+Zmień status na In Progress
+Przeprowadź analizę
+Napisz raport
+Ustaw werdykt (np. True Positive)
+Przypisz alert do L2
+Powiadom L2 (chat / telefon)
+
+3. Communication
+SOC nie działa w izolacji.
+Możesz potrzebować:
+potwierdzenia od IT
+informacji od HR
+kontaktu z użytkownikiem
+Jeśli konto Slack/Teams jest przejęte:
+NIE kontaktuj się przez to konto – użyj telefonu.
+
+Sytuacje kryzysowe
+L2 nie odpowiada 30 minut
+Dzwoń do L2
+potem L3
+potem manager
+
+Zalew alertów
+Priorytetyzuj
+Informuj L2
+
+Źle sklasyfikowany alert
+Natychmiast zgłoś do L2
+
+SIEM nie działa poprawnie
+Nie pomijaj alertu
+Zgłoś problem SOC Engineerowi
+
+Zadanie 1 – Phishing 
+Werdykt: True Positive – Spoofing Attempt
+
+When: Mar 27th, 19:25
+Who:
+Description:
+The email was classified as phishing post-delivery after an automated analysis. If the email is spoofed or contains any suspicious links or files,
+it must be deeply investigated.
+Subject:
+Important Update: Microsoft Teams Pricing Increase
+Body Keywords:
+600% price increase; urgent notice; download the report; read the details;
+Sender:
+Microsoft Support<support@microsoft.com>
+Recipient:
+Eddie Huffman, IT Manager<e.huffman@tryhackme.thm>
+Security Checks:
+SPF/Fail; DKIM/Fail;
+Attached URLs:
+None
+Attached Files:
+REPORT.rar
+
+Raport: 
+At Mar 27th, 19:25:
+The attacker attempted a spoofing attack, impersonating Microsoft Support (support@microsoft.com). The email claimed a Microsoft pricing increase of
+600% to create urgency. A malicious file, REPORT.rar, was attached. The target was our IT Manager, Eddie Huffman (e.huffman@tryhackme.thm). 
+The goal (Why) was to gain access to our network by infecting a company workstation. Technical analysis shows an SPF/DKIM error, confirming
+the spoofing attempt.
+
+
+Zadanie 2 – AD Domain Discovery + Reverse Shell
+Werdykt: True Positive – Host Compromise
+
+Mar 27th 2025 at 19:56
+Detects a spike of commands like whoami, net user, and Get-ADUser, often used during AD domain discovery.Unless the commands are
+confirmed to be a part of IT activity or legitimate scripts, the device is likely compromised and requires immediate containment.
+Invoked Commands:
+dir hostname whoami /priv net group "Domain Admins" /domain nltest /dclist:tryhackme.thm
+Host Name:
+DMZ-MSEXCHANGE-2013
+Host OS:
+Windows Server 2012 R2
+User:
+NT AUTHORITY\SYSTEM
+Source Process:
+C:\Windows\System32\cmd.exe
+Parent Process:
+C:\Users\Public\revshell.exe
+Grandparent Process:
+C:\Windows\System32\inetsrv\w3wp.exe
+
+Raport: 
+At Mar 27th 2025 at 1956:
+Host Name: DMZ-MSEXCHANGE-2013 on Host OS: Windows Server 2012 R2. Send a lot of command like whoami, net user, and Get-ADUser.
+Someone bypass our security by reverse shell from parent process C:\Users\Public\revshell.exe i Source Process C:\Windows\System32\cmd.exe.
+The granparent Process is C:\Windows\System32\inetsrv\w3wp.exe. 
+
+Najważniejsze wnioski
+Raport = kontekst dla L2
+Eskalacja = szybkie zatrzymanie zagrożenia
+Komunikacja = minimalizacja chaosu
+
+L1 nie musi wiedzieć wszystkiego – ale musi wiedzieć kiedy eskalować

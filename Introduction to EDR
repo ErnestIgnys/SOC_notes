@@ -1,0 +1,170 @@
+1. Czym jest EDR?
+Endpoint Detection and Response (EDR) to rozwiązanie bezpieczeństwa zaprojektowane do monitorowania, wykrywania i reagowania na zaawansowane zagrożenia na poziomie endpointów (Windows, Linux, macOS).
+W przeciwieństwie do klasycznego antywirusa, EDR:
+zapewnia głęboką widoczność aktywności na hoście,
+analizuje zachowania, a nie tylko sygnatury,
+umożliwia reakcję bezpośrednio z konsoli centralnej.
+EDR działa niezależnie od tego, czy urządzenie znajduje się w sieci firmowej, czy poza nią (np. praca zdalna).
+
+2. Przykładowe rozwiązania EDR
+CrowdStrike (Falcon)
+SentinelOne (ActiveEDR)
+Microsoft (Defender for Endpoint)
+Symantec (EDR)
+OpenEDR
+Architektura większości EDR jest podobna, różnice dotyczą funkcjonalności i integracji.
+
+3. Trzy filary EDR
+
+3.1 Visibility (Widoczność)
+EDR zapewnia bardzo szczegółową telemetrię, m.in.:
+modyfikacje procesów
+relacje parent-child (drzewo procesów)
+modyfikacje rejestru
+zmiany w plikach i folderach
+aktywność użytkownika
+połączenia sieciowe
+historię działań na hoście
+Analityk może:
+zobaczyć pełne drzewo procesów,
+prześledzić oś czasu ataku,
+analizować dane historyczne (threat hunting),
+badać pełen kontekst alertu.
+
+3.2 Detection (Wykrywanie)
+EDR wykorzystuje wiele technik detekcji:
+1. Detekcja sygnaturowa
+Klasyczne dopasowanie do znanych zagrożeń.
+2. Detekcja behawioralna
+Analiza zachowania procesów.
+Przykład:
+winword.exe uruchamia powershell.exe – nietypowa relacja parent-child.
+3. Anomaly Detection
+Wykrywanie odchyleń od baseline’u systemu.
+Przykład:
+modyfikacja klucza autostartu w rejestrze, która nie jest normalnym zachowaniem hosta.
+4. IOC Matching
+Dopasowanie do wskaźników kompromitacji z threat intelligence (hash, IP, domena).
+5. Mapowanie do MITRE ATT&CK
+Każda detekcja mapowana jest do:
+Tactic (np. Persistence)
+Technique (np. Scheduled Task/Job)
+Ułatwia to analizę fazy ataku.
+6. Machine Learning
+Wykrywanie:
+ataków bezplikowych,
+wieloetapowych kampanii,
+wzorców trudnych do wykrycia klasycznymi metodami.
+
+3.3 Response (Reakcja)
+EDR umożliwia reakcję bezpośrednio z konsoli.
+Isolate Host
+Odłączenie hosta od sieci (zatrzymanie lateral movement).
+Terminate Process
+Zakończenie złośliwego procesu.
+Quarantine
+Przeniesienie pliku do izolowanej lokalizacji.
+Remote Access (RTR)
+Zdalny dostęp do powłoki hosta:
+wykonywanie komend,
+uruchamianie skryptów,
+zbieranie danych.
+Artefacts Collection
+Możliwość pobrania:
+Memory Dump
+Event Logs
+zawartości folderów
+Registry Hives
+
+4. EDR vs Antivirus (AV)
+Antivirus:
+głównie detekcja sygnaturowa,
+brak głębokiej analizy zachowania,
+ograniczona widoczność kontekstu,
+brak zaawansowanej reakcji.
+EDR:
+analiza pełnego łańcucha ataku,
+detekcja proces injection,
+wykrywanie obfuskowanych PowerShell,
+monitorowanie pamięci,
+centralna korelacja zdarzeń.
+
+5. Przykładowy scenariusz ataku
+Phishing z dokumentem Word (makro VBA)
+Uruchomienie dokumentu
+Makro uruchamia PowerShell
+Pobranie drugiego payloadu
+Process injection do svchost.exe
+Połączenie z C2
+Reakcja AV:
+brak detekcji bez sygnatury,
+brak wykrycia injection,
+brak pełnego kontekstu.
+Reakcja EDR:
+zapisanie downloadu pliku,
+monitoring winword.exe,
+wykrycie nietypowej relacji parent-child,
+wykrycie obfuskowanego PowerShell,
+wykrycie process injection,
+wykrycie nietypowego outbound connection,
+wygenerowanie alertu z pełnym łańcuchem ataku.
+
+6. Architektura EDR
+
+6.1 Agent (Sensor)
+Instalowany na endpointach.
+Zadania:
+zbieranie telemetrii,
+lokalna detekcja podstawowa,
+przesyłanie danych do konsoli w czasie rzeczywistym.
+
+6.2 Konsola centralna
+korelacja danych,
+analiza z użyciem ML,
+integracja z threat intelligence,
+generowanie alertów,
+nadawanie severity (Critical, High, Medium, Low, Informational).
+
+7. Telemetria w EDR
+Telemetria to „czarna skrzynka” endpointu.
+Zawiera m.in.:
+Process Executions & Terminations
+Network Connections
+Command Line Activity (CMD, PowerShell)
+File & Folder Modifications
+Registry Modifications
+Im więcej danych, tym lepsza analiza:
+rekonstrukcja osi czasu,
+identyfikacja root cause,
+pełne zrozumienie attack chain.
+
+8. Rola analityka SOC
+Po wygenerowaniu alertu:
+Acknowledgement
+Priorytetyzacja (na podstawie severity)
+Analiza kontekstu:
+procesy
+pliki
+rejestr
+sieć
+Określenie:
+False Positive
+True Positive
+Podjęcie odpowiednich działań reakcyjnych
+
+9. EDR w ekosystemie bezpieczeństwa
+EDR nie działa samodzielnie.
+W środowisku SOC współpracuje z:
+Firewall
+DLP
+Email Security Gateway
+IAM
+SIEM
+SIEM często pełni rolę centralnego punktu korelacji wszystkich zdarzeń.
+
+10. Najważniejsze wnioski
+EDR zapewnia znacznie większą widoczność niż klasyczny AV.
+Detekcja opiera się na zachowaniu, anomaliach i ML.
+Umożliwia natychmiastową reakcję z poziomu konsoli.
+Jest kluczowym narzędziem analityka SOC.
+

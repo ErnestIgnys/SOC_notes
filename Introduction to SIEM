@@ -1,0 +1,177 @@
+
+SIEM (Security Information and Event Management) to centralne rozwiązanie bezpieczeństwa wykorzystywane w Security Operations Center (SOC).
+Jego głównym zadaniem jest zbieranie, przetwarzanie oraz analiza logów pochodzących z wielu urządzeń w sieci w celu wykrywania zagrożeń.
+W nowoczesnej infrastrukturze sieciowej praktycznie każde urządzenie generuje logi dokumentujące wykonywane działania. SIEM umożliwia ich centralne monitorowanie i analizę.
+
+Cele nauki
+Po ukończeniu materiału należy:
+rozumieć różne typy źródeł logów,
+znać ograniczenia analizy rozproszonych logów,
+rozumieć znaczenie systemów SIEM,
+znać podstawowe funkcje SIEM,
+rozumieć proces ingestii logów,
+rozumieć proces generowania i analizy alertów.
+
+Źródła logów (Log Sources)
+Urządzenia w sieci stale generują logi opisujące aktywność systemową i sieciową.
+
+1. Host-Centric Log Sources
+Logi związane bezpośrednio z systemem operacyjnym lub hostem.
+Przykłady:
+dostęp użytkownika do pliku,
+próby logowania,
+uruchamianie procesów,
+modyfikacja rejestru,
+wykonanie PowerShell,
+zdarzenia systemowe Windows/Linux.
+Urządzenia:
+komputery użytkowników,
+serwery,
+systemy Windows i Linux.
+
+2. Network-Centric Log Sources
+Logi generowane podczas komunikacji sieciowej.
+Przykłady:
+połączenia SSH,
+transfer FTP,
+ruch HTTP/HTTPS,
+połączenia VPN,
+udostępnianie plików w sieci.
+Urządzenia:
+firewall,
+IDS/IPS,
+routery,
+urządzenia sieciowe.
+
+Problemy analizy rozproszonych logów
+Duża liczba źródeł
+Sieci generują setki lub tysiące zdarzeń na sekundę.
+Brak centralizacji
+Analityk musi logować się osobno do wielu systemów (SSH, RDP).
+Ograniczony kontekst
+
+Pojedynczy log często nie wskazuje ataku. Dopiero korelacja wielu zdarzeń ujawnia zagrożenie.
+Przykład:
+logowanie VPN,
+dostęp do plików,
+uruchomienie PowerShell,
+połączenie wychodzące.
+
+Osobno wyglądają normalnie, razem mogą wskazywać eksfiltrację danych.
+Ograniczona analiza manualna
+Ręczna analiza wszystkich logów jest praktycznie niemożliwa.
+Różne formaty logów
+Windows, Linux i urządzenia sieciowe zapisują dane w różnych formatach.
+
+Czym jest SIEM
+SIEM:
+zbiera logi z wielu źródeł,
+normalizuje ich format,
+koreluje zdarzenia,
+wykrywa zagrożenia przy użyciu reguł detekcji,
+generuje alerty bezpieczeństwa.
+
+Kluczowe funkcje SIEM
+1. Centralne zbieranie logów
+Logi z endpointów, serwerów i urządzeń sieciowych trafiają do jednego systemu.
+
+2. Normalizacja logów
+Proces składa się z:
+Parsing – rozbijanie logów na pola,
+Normalization – konwersja różnych formatów do jednego standardu.
+Umożliwia to jednolitą analizę danych.
+
+3. Korelacja logów
+SIEM łączy zdarzenia z różnych systemów w celu wykrycia wzorców ataku.
+Przykład:
+nowe IP VPN,
+dostęp do dokumentów,
+uruchomienie skryptu,
+ruch wychodzący.
+Może wskazywać przejęcie konta.
+
+4. Alertowanie w czasie rzeczywistym
+Alert powstaje, gdy spełnione zostaną warunki reguły detekcji.
+Reguły mogą wykrywać np.:
+wiele nieudanych logowań,
+logowanie po wcześniejszych błędach,
+podłączenie USB,
+duży transfer danych.
+
+5. Dashboardy i raportowanie
+Dashboardy prezentują podsumowanie bezpieczeństwa:
+aktywne alerty,
+próby logowania,
+stan systemów,
+liczba zdarzeń,
+uruchomione reguły,
+najczęściej odwiedzane domeny.
+
+Przykładowe źródła logów
+
+Windows
+Logi dostępne w Event Viewer.
+Każde zdarzenie posiada unikalny Event ID.
+
+Linux
+Typowe lokalizacje:
+/var/log/auth.log – logowania,
+/var/log/secure – uwierzytelnianie,
+/var/log/cron – zadania cron,
+/var/log/httpd – serwer WWW,
+/var/log/kern – zdarzenia kernela.
+
+Web Server (Apache)
+Rejestruje:
+żądania HTTP,
+odpowiedzi serwera,
+błędy aplikacji webowych.
+Ingestia logów do SIEM
+
+Metody przesyłania logów:
+Agent / Forwarder
+Lekki agent instalowany na endpointach wysyła logi do SIEM.
+Syslog
+Standardowy protokół przesyłania logów w czasie rzeczywistym.
+Manual Upload
+Ręczne przesyłanie danych do analizy.
+Port Forwarding
+Endpointy wysyłają dane na określony port SIEM.
+
+Reguły detekcji (Detection Rules)
+Reguły to warunki logiczne analizujące wartości pól logów.
+Przykłady
+Multiple Failed Login Attempts
+5 nieudanych logowań w 10 sekund
+Event Log Cleared
+LogSource = WinEventLog AND EventID = 104
+WHOAMI Execution Detection
+LogSource = WinEventLog
+EventID = 4688
+NewProcessName contains "whoami"
+
+Normalizacja logów jest kluczowa, ponieważ reguły działają na parach pole–wartość.
+Analiza alertów w SIEM
+Po wygenerowaniu alertu analityk:
+Sprawdza powiązane zdarzenia.
+Analizuje regułę detekcji.
+Określa typ alertu.
+
+Możliwe wyniki:
+False Positive
+dostrojenie reguły.
+True Positive
+dalsze dochodzenie,
+kontakt z właścicielem systemu,
+izolacja hosta,
+blokada adresu IP.
+
+Podsumowanie
+SIEM zapewnia:
+pełną widoczność infrastruktury,
+centralne zarządzanie logami,
+automatyczne wykrywanie zagrożeń,
+analizę zdarzeń w czasie rzeczywistym,
+wsparcie pracy analityka SOC.
+
+Stanowi podstawowe narzędzie pracy analityka SOC L1.

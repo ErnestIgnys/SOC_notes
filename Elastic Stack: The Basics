@@ -1,0 +1,198 @@
+Elastic Stack (ELK) to zestaw narzędzi open-source służących do:
+zbierania danych,
+przechowywania logów,
+wyszukiwania informacji,
+analizy zdarzeń,
+wizualizacji danych w czasie rzeczywistym.
+ELK nie jest klasycznym systemem SIEM, jednak ze względu na swoje możliwości wyszukiwania i wizualizacji jest powszechnie używany przez zespoły SOC jako rozwiązanie SIEM.
+
+Cele nauki
+Po ukończeniu materiału należy:
+rozumieć komponenty ELK,
+znać funkcjonalności Elastic Stack,
+umieć wyszukiwać i filtrować dane,
+analizować logi VPN,
+tworzyć wizualizacje i dashboardy.
+
+Czym jest Elastic Stack
+Elastic Stack to zestaw współpracujących komponentów umożliwiających:
+Collect → Process → Store → Search → Visualize
+System pozwala analizować ogromne ilości danych pochodzących z dowolnych źródeł.
+
+Główne komponenty ELK
+Elastic Stack składa się z czterech podstawowych elementów:
+Elasticsearch
+Logstash
+Beats
+Kibana
+
+1. Elasticsearch
+Elasticsearch to silnik wyszukiwania i analizy danych.
+Funkcje:
+przechowywanie logów,
+analiza danych,
+korelacja zdarzeń,
+szybkie wyszukiwanie dokumentów JSON,
+komunikacja poprzez REST API.
+Pełni rolę bazy danych dla logów bezpieczeństwa.
+
+2. Logstash
+Logstash to silnik przetwarzania danych.
+Odpowiada za:
+pobieranie danych,
+filtrowanie,
+normalizację logów,
+przesyłanie danych do Elasticsearch.
+
+Konfiguracja Logstash składa się z trzech części:
+Input
+Źródło danych (pliki, porty, Beats).
+Filter
+Normalizacja oraz modyfikacja logów.
+Output
+Miejsce wysłania danych:
+Elasticsearch,
+Kibana,
+plik,
+port sieciowy.
+Logstash obsługuje wiele pluginów Input/Filter/Output.
+
+3. Beats
+Beats to lekkie agenty instalowane na endpointach (data shippers).
+Ich zadaniem jest przesyłanie konkretnych typów danych.
+Przykłady:
+Winlogbeat – logi Windows,
+Filebeat – logi plików,
+Packetbeat – ruch sieciowy,
+Metricbeat – metryki systemowe.
+Beats wysyłają dane bezpośrednio do Elasticsearch lub Logstash.
+
+4. Kibana
+Kibana to webowy interfejs analityczny.
+Umożliwia:
+analizę logów,
+prowadzenie dochodzeń,
+tworzenie wizualizacji,
+budowanie dashboardów,
+monitoring w czasie rzeczywistym.
+To główne narzędzie pracy analityka SOC w ELK.
+
+Jak działają komponenty ELK
+Przepływ danych:
+Endpoint → Beats → Logstash → Elasticsearch → Kibana → Analyst
+Beats zbierają dane.
+Logstash normalizuje logi.
+Elasticsearch przechowuje i indeksuje dane.
+Kibana wizualizuje i umożliwia analizę.
+Kibana – Interfejs Analityka SOC
+
+Najważniejszym miejscem pracy analityka jest Discover Tab.
+Discover Tab
+Umożliwia:
+przeglądanie logów,
+wyszukiwanie zdarzeń,
+analizę anomalii,
+filtrowanie danych.
+
+Elementy Discover
+Logs
+Każdy wiersz reprezentuje pojedyncze zdarzenie.
+
+Fields Pane
+Panel z listą pól wykrytych w logach.
+Możliwości:
+dodanie filtra (+),
+wykluczenie wartości (-),
+podgląd najczęstszych wartości.
+
+Index Pattern
+Określa, które dane analizujemy.
+Przykład:
+vpn_connections
+Każde źródło logów posiada własny indeks.
+
+Search Bar
+Miejsce wykonywania zapytań.
+Time Filter
+Filtrowanie logów według czasu.
+
+Timeline
+Wykres liczby zdarzeń w czasie.
+Pomaga wykrywać:
+nagłe skoki aktywności,
+anomalie,
+potencjalne incydenty.
+KQL – Kibana Query Language
+KQL służy do wyszukiwania danych w Elasticsearch.
+
+1. Free Text Search
+Wyszukiwanie tekstowe:
+United States
+Zwraca wszystkie logi zawierające frazę.
+Wildcard:
+
+United*
+2. Operatory logiczne
+AND
+"United States" AND "Virginia"
+OR
+"United States" OR "England"
+NOT
+"United States" AND NOT ("Florida")
+
+3. Field-Based Search
+Składnia:
+Field : Value
+Przykład:
+Source_ip : 238.163.231.224 AND UserName : Suleman
+Pozwala na precyzyjną analizę zdarzeń.
+Tworzenie tabel i redukcja szumu
+Możliwe jest:
+wybieranie tylko istotnych pól,
+tworzenie czytelnych tabel,
+zapisywanie widoków analitycznych.
+Zmniejsza to ilość nieistotnych danych (noise).
+
+Wizualizacje w Kibana
+Dostępne formy:
+tabela,
+wykres słupkowy,
+wykres kołowy,
+timeline,
+korelacje pól.
+Przykład:
+korelacja Source_IP z Source_Country.
+Po utworzeniu wizualizacji należy ją zapisać w bibliotece.
+
+Dashboardy
+Dashboard zapewnia centralny widok bezpieczeństwa.
+Można łączyć:
+zapisane wyszukiwania,
+wizualizacje,
+statystyki.
+
+Tworzenie dashboardu
+Dashboard → Create dashboard
+Add from Library
+Dodanie wizualizacji
+Ułożenie elementów
+Save
+Dashboard daje tzw. single pane of glass dla monitorowania bezpieczeństwa.
+
+Zastosowanie w SOC
+
+ELK umożliwia:
+analizę logów VPN,
+wykrywanie anomalii,
+identyfikację podejrzanych logowań,
+korelację zdarzeń,
+monitoring infrastruktury.
+
+Podsumowanie
+Elastic Stack:
+nie jest klasycznym SIEM,
+pełni funkcję SIEM w wielu SOC,
+umożliwia analizę ogromnych zbiorów danych,
+zapewnia zaawansowane wyszukiwanie,
+oferuje rozbudowane wizualizacje.
+

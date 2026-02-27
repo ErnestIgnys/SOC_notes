@@ -1,0 +1,152 @@
+Splunk jest jednym z najpopularniejszych systemów klasy SIEM (Security Information and Event Management).
+Umożliwia:
+zbieranie logów,
+analizę danych,
+korelację zdarzeń,
+monitorowanie aktywności sieciowej w czasie rzeczywistym,
+szybsze wykrywanie incydentów bezpieczeństwa.
+Splunk zapewnia pełną widoczność infrastruktury poprzez centralną analizę danych z wielu źródeł.
+
+Cele nauki
+Po ukończeniu materiału należy:
+rozumieć komponenty Splunk,
+znać podstawowe elementy interfejsu,
+rozumieć proces ingestii logów,
+umieć dodać i analizować dane w Splunk.
+
+Główne komponenty Splunk
+Splunk składa się z trzech podstawowych elementów:
+Forwarder
+Indexer
+Search Head
+Każdy komponent pełni inną rolę w przetwarzaniu danych.
+
+1. Splunk Forwarder
+Forwarder to lekki agent instalowany na monitorowanym systemie (endpoint).
+Zadania:
+zbieranie logów,
+przesyłanie danych do Indexera,
+minimalne zużycie zasobów systemowych.
+Przykładowe źródła danych:
+serwery WWW,
+system Windows (Event Logs, PowerShell, Sysmon),
+system Linux,
+bazy danych.
+Forwarder nie analizuje danych — jedynie je przesyła.
+
+2. Splunk Indexer
+Indexer jest najważniejszym komponentem przetwarzającym dane.
+Funkcje:
+odbiera logi z Forwarderów,
+parsuje dane,
+normalizuje logi,
+zapisuje dane jako zdarzenia (events),
+umożliwia szybkie wyszukiwanie.
+Dane są zapisywane w postaci:
+field = value
+Dzięki temu możliwa jest efektywna analiza.
+
+3. Search Head
+Search Head to interfejs analityczny Splunk.
+Umożliwia:
+wyszukiwanie danych,
+analizę logów,
+tworzenie raportów,
+wizualizację wyników.
+
+Zapytania wykonywane są przy użyciu:
+SPL (Search Processing Language)
+Proces wyszukiwania:
+użytkownik wykonuje zapytanie,
+Search Head wysyła je do Indexera,
+Indexer zwraca dopasowane zdarzenia.
+Interfejs Splunk
+Po zalogowaniu widoczny jest ekran główny Splunk.
+
+Splunk Bar (górny pasek)
+Zawiera:
+Messages – komunikaty systemowe,
+Settings – konfiguracja,
+Activity – status wyszukiwań,
+Help – dokumentacja,
+Find – wyszukiwanie w aplikacji.
+Pozwala również przełączać się między aplikacjami Splunk.
+
+Apps Panel
+Lista zainstalowanych aplikacji.
+Domyślna aplikacja:
+Search & Reporting
+
+Używana do analizy logów i tworzenia zapytań.
+Explore Splunk
+Sekcja szybkiego dostępu:
+dodawanie danych,
+instalacja aplikacji,
+dokumentacja Splunk.
+
+Dashboard
+Dashboardy prezentują dane w formie wizualnej:
+alerty,
+statystyki,
+aktywność systemów,
+trendy zdarzeń.
+
+Możliwe jest:
+korzystanie z gotowych dashboardów,
+tworzenie własnych dashboardów.
+Ingestia danych w Splunk
+
+Splunk może przyjmować praktycznie dowolne dane:
+logi systemowe,
+logi firewalli,
+logi VPN,
+logi aplikacyjne,
+dane sieciowe.
+
+Po dodaniu dane są przekształcane w zdarzenia (events).
+Proces dodawania danych (Upload Data)
+Podczas ingestii logów wykonywane jest 5 kroków:
+
+1. Select Source
+Wybór pliku logów lub źródła danych.
+
+2. Select Source Type
+Określenie typu logów:
+JSON,
+Syslog,
+Event Logs,
+inne formaty.
+
+3. Input Settings
+Konfiguracja:
+indeksu (index),
+nazwy hosta,
+parametrów danych.
+
+4. Review
+Weryfikacja konfiguracji.
+
+5. Done
+Zakończenie procesu ingestii.
+Po zakończeniu dane są gotowe do analizy w Splunk.
+Analiza danych w Splunk
+Po zaimportowaniu logów analityk może:
+wyszukiwać zdarzenia,
+filtrować dane,
+analizować aktywność użytkowników,
+tworzyć wizualizacje,
+wykrywać podejrzane działania.
+Przykład zastosowania:
+analiza logów VPN w celu wykrycia nietypowych logowań.
+
+Podsumowanie
+Splunk umożliwia:
+centralne zbieranie logów,
+normalizację danych,
+szybkie wyszukiwanie zdarzeń,
+wizualizację informacji,
+wsparcie analizy incydentów SOC.
+Podstawowy przepływ danych w Splunk:
+Endpoint → Forwarder → Indexer → Search Head → Analyst
+
+Splunk jest jednym z kluczowych narzędzi pracy analityka SOC.

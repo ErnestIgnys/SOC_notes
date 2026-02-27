@@ -1,0 +1,207 @@
+
+Zespoły Security Operations Center (SOC) korzystają z wielu narzędzi bezpieczeństwa, takich jak:
+
+* SIEM
+* EDR
+* Firewalle
+* Platformy Threat Intelligence
+* Systemy IAM
+* Systemy ticketowe
+
+SOC odpowiada za monitorowanie infrastruktury, wykrywanie zagrożeń oraz reagowanie na incydenty bezpieczeństwa. Wraz ze wzrostem złożoności cyberataków tradycyjne SOC napotykają jednak liczne problemy operacyjne.
+
+Celem tego modułu było poznanie narzędzia **SOAR**, które pomaga rozwiązać te problemy poprzez automatyzację i integrację procesów bezpieczeństwa.
+
+
+
+## Jak działa tradycyjny SOC
+
+SOC stanowi scentralizowane centrum odpowiedzialne za ochronę zasobów organizacji poprzez ciągłe monitorowanie i analizę zdarzeń bezpieczeństwa.
+
+### Główne zadania SOC
+
+#### Monitorowanie i wykrywanie (Monitoring & Detection)
+
+Polega na ciągłej analizie aktywności w sieci i systemach w celu wykrycia podejrzanych działań.
+
+Przykłady:
+
+* wielokrotne nieudane logowania,
+* logowanie z nietypowej lokalizacji,
+* podejrzany ruch sieciowy.
+
+Monitoring realizowany jest głównie przy użyciu systemów SIEM.
+
+
+#### Odtwarzanie i remediacja (Recovery & Remediation)
+
+SOC pełni rolę pierwszej linii reagowania na incydenty.
+
+Typowe działania:
+
+* izolacja zainfekowanego endpointa przez EDR,
+* blokada adresu IP na firewallu,
+* dezaktywacja kont użytkowników,
+* usuwanie złośliwego oprogramowania.
+
+
+#### Threat Intelligence
+
+SOC wykorzystuje aktualne dane o zagrożeniach, takie jak:
+
+* złośliwe adresy IP,
+* domeny,
+* hashe plików,
+* Indicators of Compromise (IoC).
+
+Pozwala to blokować zagrożenia jeszcze przed ich eskalacją.
+
+
+#### Komunikacja
+
+SOC współpracuje z:
+
+* zespołami IT,
+* administratorami,
+* managementem.
+
+Przykład:
+utworzenie zgłoszenia dla zespołu IT w celu weryfikacji aktualizacji systemu.
+
+## Problemy tradycyjnych SOC
+
+### Alert Fatigue
+
+Duża liczba alertów generowanych przez różne systemy powoduje przeciążenie analityków. Wiele z nich to false positives.
+
+
+### Brak integracji narzędzi
+
+Systemy bezpieczeństwa działają niezależnie, co wymusza ciągłe przełączanie się między narzędziami.
+
+
+### Procesy manualne
+
+Procedury reagowania często nie są udokumentowane i opierają się na doświadczeniu analityków, co wydłuża czas reakcji.
+
+
+### Niedobór specjalistów
+
+Rosnąca liczba zagrożeń przy ograniczonej liczbie analityków prowadzi do wolniejszej obsługi incydentów.
+
+
+## Czym jest SOAR?
+
+**SOAR (Security Orchestration, Automation and Response)** to platforma integrująca różne narzędzia bezpieczeństwa w jednym środowisku.
+
+SOAR umożliwia:
+
+* centralne zarządzanie incydentami,
+* automatyzację analiz,
+* dokumentowanie śledztw,
+* zarządzanie zgłoszeniami (case management).
+
+
+## Główne funkcjonalności SOAR
+
+### 1. Orkiestracja (Orchestration)
+
+Łączenie wielu narzędzi bezpieczeństwa w jeden spójny workflow.
+
+Przykład – atak brute force VPN:
+
+1. Otrzymanie alertu z SIEM
+2. Sprawdzenie historii logowań użytkownika
+3. Weryfikacja reputacji IP w Threat Intelligence
+4. Analiza udanych logowań
+5. Eskalacja działań ochronnych
+
+Workflow taki nazywany jest **Playbookiem**.
+
+
+### 2. Automatyzacja (Automation)
+
+SOAR automatycznie wykonuje kroki zapisane w playbooku bez udziału analityka.
+
+Przykłady automatycznych działań:
+
+* zapytania do SIEM,
+* sprawdzanie reputacji IP,
+* blokowanie kont,
+* tworzenie zgłoszeń incydentu.
+
+Automatyzacja znacząco redukuje obciążenie analityków.
+
+
+### 3. Reakcja (Response)
+
+SOAR pozwala wykonywać działania naprawcze z jednego miejsca:
+
+* blokowanie adresów IP,
+* izolowanie endpointów,
+* wyłączanie kont,
+* inicjowanie obsługi incydentu.
+
+
+## Czy SOAR zastępuje analityków SOC?
+
+Nie.
+
+SOAR automatyzuje powtarzalne zadania, jednak analitycy SOC są nadal niezbędni do:
+
+* analizy złożonych incydentów,
+* podejmowania decyzji,
+* tworzenia playbooków,
+* oceny kontekstu biznesowego zagrożeń.
+
+
+## Playbooki SOAR
+
+Playbook to zdefiniowany workflow reagowania na określony typ incydentu.
+
+
+### Playbook phishingowy
+
+Przykładowy proces:
+
+1. Otrzymanie alertu o podejrzanym mailu
+2. Utworzenie zgłoszenia
+3. Sprawdzenie obecności URL lub załącznika
+4. Analiza reputacji
+5. Identyfikacja zagrożenia
+6. Usunięcie wiadomości i powiadomienie użytkowników
+
+
+### Playbook zarządzania podatnościami (CVE)
+
+Automatyczny proces:
+
+1. Wykrycie nowego CVE
+2. Ocena poziomu ryzyka
+3. Sprawdzenie podatnych systemów
+4. Utworzenie zadania patchowania
+5. Test aktualizacji
+6. Wdrożenie poprawki produkcyjnej
+
+
+## Workflow Threat Intelligence
+
+Integracja Threat Intelligence w SOAR pozwala na:
+
+* automatyczne wzbogacanie alertów,
+* korelację danych z wielu źródeł,
+* szybsze podejmowanie decyzji,
+* ustandaryzowaną obsługę incydentów.
+
+
+## Podsumowanie
+
+Tradycyjne SOC mierzą się z problemami takimi jak nadmiar alertów, ręczne procesy oraz brak integracji narzędzi.
+
+SOAR rozwiązuje te problemy poprzez:
+
+* orkiestrację narzędzi bezpieczeństwa,
+* automatyzację analiz,
+* scentralizowane reagowanie na incydenty.
+
+Automatyzacja zwiększa efektywność pracy SOC, jednak rola analityka bezpieczeństwa pozostaje kluczowa.

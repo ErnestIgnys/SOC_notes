@@ -1,0 +1,249 @@
+
+
+Pyramid of Pain to koncepcja stworzona przez Davida Bianco, wykorzystywana w cyberbezpieczeństwie do oceny skuteczności wykrywania przeciwnika (atakującego). Model pokazuje, jak trudne jest dla atakującego zmienienie określonych wskaźników kompromitacji (IOC).
+
+Im wyżej w piramidzie, tym większy koszt i trudność dla atakującego.
+
+Koncepcja ta jest stosowana w rozwiązaniach bezpieczeństwa takich jak:
+
+* Cisco Security
+* SentinelOne
+* SOCRadar
+
+Jest szczególnie ważna dla:
+
+* Threat Hunterów
+* Incident Responderów
+* SOC Analystów
+
+---
+
+1. HASH VALUES (NAJNIŻSZY POZIOM)
+
+---
+
+Hash to stałej długości wartość numeryczna jednoznacznie identyfikująca dane.
+Powstaje w wyniku działania algorytmu haszującego.
+
+Najpopularniejsze algorytmy:
+
+MD5
+
+* Stworzony w 1992 przez Rona Rivesta
+* 128-bitowy hash
+* NIE jest już bezpieczny kryptograficznie
+* podatny na collision attacks
+
+SHA-1
+
+* Stworzony przez NSA w 1995
+* 160-bitowy hash
+* wycofany przez NIST
+* podatny na brute-force
+
+SHA-2 (np. SHA-256)
+
+* następca SHA-1
+* 256-bitowy hash
+* obecnie szeroko stosowany i bezpieczny
+
+Hash NIE jest bezpieczny, jeśli dwa pliki mają identyczny hash.
+
+Zastosowanie:
+
+* identyfikacja malware
+* analiza podejrzanych plików
+* raporty ransomware
+
+Problemy:
+Zmiana nawet jednego bitu pliku powoduje całkowicie inny hash.
+Dlatego hash jako IOC jest łatwy do obejścia.
+
+Przykład:
+Dodanie tekstu do pliku zmienia jego hash.
+
+---
+
+2. IP ADDRESSES
+
+---
+
+Adres IP identyfikuje urządzenie w sieci.
+
+Obrona:
+
+* blokowanie adresów IP na firewallu
+* deny/drop ruchu sieciowego
+
+Problem:
+Atakujący może łatwo zmienić IP.
+
+Technika obejścia:
+FAST FLUX
+
+Fast Flux:
+
+* technika DNS używana przez botnety
+* wiele IP przypisanych do jednej domeny
+* ciągła rotacja adresów
+* ukrywanie infrastruktury C2
+
+---
+
+3. DOMAIN NAMES
+
+---
+
+Domena mapuje adres IP na nazwę tekstową.
+
+Przykłady:
+evilcorp.com
+tryhackme.evilcorp.com
+
+Zmiana domeny jest trudniejsza niż IP, ale nadal możliwa.
+
+Techniki atakujących:
+
+Punycode Attack
+Przykład:
+adıdas.de -> xn--addas-o4a.de
+
+Fałszywa domena wygląda jak legalna.
+
+URL Shorteners wykorzystywane w atakach:
+
+* bit.ly
+* tinyurl.com
+* ow.ly
+* goo.gl
+* smarturl.it
+
+Dodanie "+" na końcu skróconego linku pozwala zobaczyć prawdziwy adres.
+
+Źródła detekcji:
+
+* proxy logs
+* web server logs
+* DNS logs
+
+---
+
+4. HOST ARTIFACTS (STREFA ŻÓŁTA)
+
+---
+
+Ślady pozostawione na systemie:
+
+* wpisy rejestru
+* uruchomione procesy
+* dropped files
+* nietypowe zachowania aplikacji
+* IOC specyficzne dla zagrożenia
+
+Przykłady:
+
+* Word uruchamia podejrzany proces
+* malware zapisuje pliki w TEMP
+
+---
+
+5. NETWORK ARTIFACTS
+
+---
+
+Artefakty sieciowe obejmują:
+
+* User-Agent strings
+* wzorce URI
+* komunikację C2
+* HTTP POST requests
+
+User-Agent:
+nagłówek HTTP identyfikujący klienta.
+
+Nietypowy User-Agent może wskazywać malware.
+
+Detekcja:
+
+* Wireshark
+* TShark
+* IDS (np. Snort)
+
+Przykład filtrowania:
+tshark --Y http.request -T fields -e http.host -e http.user_agent -r analysis_file.pcap
+
+---
+
+6. TOOLS
+
+---
+
+Na tym poziomie atakujący musi zmienić narzędzia.
+
+Przykłady:
+
+* malware
+* backdoory
+* makra phishingowe
+* payloady
+* EXE/DLL
+
+Metody obrony:
+
+* sygnatury AV
+* YARA rules
+* detection rules
+
+Źródła malware:
+
+* MalwareBazaar
+* Malshare
+* SOC Prime Threat Detection Marketplace
+
+Fuzzy Hashing:
+Analiza podobieństwa plików mimo drobnych zmian.
+
+Przykład:
+SSDeep
+
+---
+
+7. TTPs (NAJWYŻSZY POZIOM)
+
+---
+
+TTPs = Tactics, Techniques and Procedures
+
+Opisują pełne zachowanie atakującego:
+
+* phishing
+* persistence
+* lateral movement
+* data exfiltration
+
+Powiązane z MITRE ATT&CK Matrix.
+
+Przykład:
+Pass-the-Hash attack wykryty przez monitoring logów Windows.
+
+Wykrycie TTP:
+
+* praktycznie zmusza atakującego do zmiany całej strategii
+* często powoduje porzucenie celu
+
+---
+
+## PODSUMOWANIE
+
+Im wyżej w Pyramid of Pain wykrywamy aktywność:
+
+* tym większy koszt dla atakującego
+* tym skuteczniejsza obrona
+
+Najlepsza strategia:
+koncentrować się na TTP oraz zachowaniach, a nie tylko na hashach lub IP.
+
+Cytat:
+"The amount of pain you cause an adversary depends on the types of indicators you are able to make use of."
+
+* David Bianco

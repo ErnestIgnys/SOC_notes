@@ -1,0 +1,313 @@
+
+
+Unified Kill Chain (UKC) to framework cyberbezpieczeństwa opracowany przez Paula Polsa w 2017 roku.
+
+Model rozszerza klasyczny Cyber Kill Chain oraz uzupełnia framework MITRE ATT&CK.
+
+Celem UKC jest pełne zrozumienie:
+
+* motywacji atakującego
+* metod działania
+* technik kompromitacji
+* całego cyklu cyberataku
+
+---
+
+## DLACZEGO UKC JEST WAŻNY
+
+UKC pomaga w:
+
+* budowaniu silnej cybersecurity posture
+* threat modelling
+* identyfikacji powierzchni ataku
+* analizie działań APT
+* wykrywaniu post-exploitation
+* przerywaniu ataku na wielu etapach
+
+UKC NIE zastępuje MITRE ATT&CK ani Cyber Kill Chain.
+Jest frameworkiem uzupełniającym.
+
+---
+
+## THREAT MODELLING
+
+Threat Modelling to proces redukcji ryzyka poprzez:
+
+1. Identyfikację zasobów IT
+
+   * systemy
+   * aplikacje
+   * dane wrażliwe
+
+2. Analizę podatności
+
+   * błędy konfiguracji
+   * luki bezpieczeństwa
+
+3. Opracowanie zabezpieczeń
+
+4. Wdrożenie polityk bezpieczeństwa
+
+   * SDLC
+   * szkolenia phishing awareness
+
+Frameworki używane w Threat Modelling:
+
+* STRIDE
+* DREAD
+* CVSS
+
+---
+
+## STRUKTURA UNIFIED KILL CHAIN
+
+UKC zawiera 18 faz ataku podzielonych na 3 główne cele:
+
+IN
+THROUGH
+OUT
+
+==================================================
+PHASE GROUP: IN (INITIAL ACCESS)
+================================
+
+Celem jest uzyskanie pierwszego dostępu do systemu.
+
+---
+
+## Reconnaissance (TA0043)
+
+Zbieranie informacji o celu.
+
+Przykłady:
+
+* analiza usług i systemów
+* zbieranie danych pracowników
+* poszukiwanie credentiali
+* analiza topologii sieci
+
+---
+
+## Weaponization (TA0001)
+
+Przygotowanie infrastruktury ataku.
+
+Przykłady:
+
+* konfiguracja C2
+* przygotowanie payloadów
+* reverse shell listener
+
+---
+
+## Social Engineering (TA0001)
+
+Manipulacja użytkownikami.
+
+Techniki:
+
+* phishing
+* fałszywe strony logowania
+* impersonacja pracowników
+* fizyczny dostęp
+
+---
+
+## Exploitation (TA0002)
+
+Wykorzystanie podatności do wykonania kodu.
+
+Przykłady:
+
+* exploit web application
+* upload reverse shell
+* execution abuse
+
+---
+
+## Persistence (TA0003)
+
+Utrzymanie dostępu.
+
+Metody:
+
+* backdoory
+* scheduled tasks
+* C2 agents
+* malicious services
+
+---
+
+## Defence Evasion (TA0005)
+
+Omijanie zabezpieczeń.
+
+Cele:
+
+* firewall bypass
+* AV evasion
+* IDS/IPS avoidance
+* log manipulation
+
+---
+
+## Command & Control (TA0011)
+
+Zdalne sterowanie systemem.
+
+Możliwości:
+
+* wykonywanie komend
+* kradzież danych
+* pivoting
+
+---
+
+## Pivoting (TA0008)
+
+Użycie przejętego systemu jako punktu ataku
+na inne systemy sieciowe.
+
+==================================================
+PHASE GROUP: THROUGH (INTERNAL MOVEMENT)
+========================================
+
+Atakujący rozszerza dostęp w sieci.
+
+---
+
+## Discovery (TA0007)
+
+Rozpoznanie środowiska wewnętrznego:
+
+* konta użytkowników
+* konfiguracje
+* udziały sieciowe
+* aplikacje
+
+---
+
+## Privilege Escalation (TA0004)
+
+Podniesienie uprawnień:
+
+* Administrator
+* SYSTEM / ROOT
+* konta uprzywilejowane
+
+---
+
+## Execution (TA0002)
+
+Uruchamianie malware:
+
+* trojany
+* zadania harmonogramu
+* skrypty C2
+
+---
+
+## Credential Access (TA0006)
+
+Pozyskanie danych logowania:
+
+* credential dumping
+* keylogging
+* token theft
+
+---
+
+## Lateral Movement (TA0008)
+
+Przemieszczanie się w sieci
+przy użyciu zdobytych uprawnień.
+
+==================================================
+PHASE GROUP: OUT (OBJECTIVES)
+=============================
+
+Realizacja celu ataku.
+
+---
+
+## Collection (TA0009)
+
+Zbieranie danych:
+
+* pliki
+* e-maile
+* przeglądarki
+* multimedia
+
+---
+
+## Exfiltration (TA0010)
+
+Kradzież danych.
+
+Techniki:
+
+* kompresja
+* szyfrowanie
+* transfer przez C2
+
+---
+
+## Impact (TA0040)
+
+Zakłócenie działania systemów:
+
+* ransomware
+* data wipe
+* DoS
+* defacement
+
+---
+
+## Objectives
+
+Finalny cel ataku:
+
+* zysk finansowy
+* szpiegostwo
+* sabotaż
+* reputational damage
+
+---
+
+## ZALETY UKC
+
+* nowoczesny model (2017 / 2022)
+* realistyczny przebieg ataku
+* obejmuje post-exploitation
+* pokazuje powtarzalność faz
+* uwzględnia motywację atakującego
+
+---
+
+## UKC VS TRADITIONAL KILL CHAIN
+
+Cyber Kill Chain:
+
+* liniowy model
+* skupienie na malware delivery
+
+Unified Kill Chain:
+
+* pełny cykl ataku
+* ruch wewnątrz sieci
+* realistyczne scenariusze APT
+
+---
+
+## PODSUMOWANIE
+
+Najlepsza obrona polega na:
+
+* zrozumieniu zachowania przeciwnika
+* analizie TTP
+* wykrywaniu post-exploitation
+* przerwaniu ataku jak najwcześniej
+
+UKC + MITRE ATT&CK + SIEM =
+nowoczesne podejście Blue Team.

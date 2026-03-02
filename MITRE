@@ -1,0 +1,249 @@
+
+
+## 1. Czym jest MITRE
+
+MITRE to organizacja non-profit zajmująca się badaniami i rozwojem technologii w wielu dziedzinach, m.in.:
+
+* cyberbezpieczeństwo
+* sztuczna inteligencja
+* systemy kosmiczne
+* ochrona zdrowia
+
+Misja MITRE:
+**„Solve problems for a safer world”** – rozwiązywanie problemów dla bezpieczniejszego świata.
+
+MITRE tworzy standardy i frameworki używane globalnie przez zespoły bezpieczeństwa.
+
+---
+
+## 2. MITRE ATT&CK Framework
+
+### Definicja
+
+MITRE ATT&CK to publiczna baza wiedzy opisująca:
+
+* zachowania atakujących
+* techniki ataków
+* rzeczywiste operacje cyberprzestępcze
+
+Framework bazuje na **realnych obserwacjach ataków**.
+
+---
+
+## 3. Model TTP
+
+ATT&CK opisuje działania przeciwnika poprzez TTP:
+
+### Tactic (Taktyka)
+
+Cel atakującego – *dlaczego wykonuje działanie*
+
+Przykład:
+Reconnaissance
+
+---
+
+### Technique (Technika)
+
+Sposób osiągnięcia celu.
+
+Przykład:
+Active Scanning
+
+---
+
+### Procedure (Procedura)
+
+Konkretna implementacja techniki.
+
+Przykład:
+Skanowanie zakresów IP narzędziem Nmap.
+
+---
+
+## 4. ATT&CK Matrix
+
+Macierz ATT&CK przedstawia:
+
+* taktyki (kolumny)
+* techniki i sub-techniki (wiersze)
+
+Przykład:
+
+Reconnaissance
+→ Active Scanning
+→
+
+* IP Block Scanning
+* Vulnerability Scanning
+* Wordlist Scanning
+
+Każda technika posiada:
+
+* ID techniki
+* opis
+* przykłady użycia przez grupy APT
+* metody detekcji
+* sposoby mitigacji
+
+---
+
+## 5. Dlaczego ATT&CK jest ważny
+
+ATT&CK zapewnia:
+
+* wspólny język dla specjalistów cyberbezpieczeństwa
+* standaryzację opisu ataków
+* łatwiejszą analizę incydentów
+* możliwość mapowania zagrożeń na detekcje
+
+Pozwala zamienić:
+Threat Intelligence → realne reguły SIEM/EDR.
+
+---
+
+## 6. Kto używa ATT&CK
+
+### CTI Teams
+
+Analiza zagrożeń i profilowanie grup APT.
+
+### SOC Analysts
+
+Analiza alertów i priorytetyzacja incydentów.
+
+### Detection Engineers
+
+Budowa reguł detekcji w SIEM/EDR.
+
+### Incident Responders
+
+Rekonstrukcja przebiegu ataku.
+
+### Red / Purple Teams
+
+Symulacja realistycznych ataków.
+
+---
+
+## 7. Mapowanie ataku (Przykład)
+
+Po incydencie bezpieczeństwa:
+
+1. Analizuje się przebieg ataku
+2. Mapuje działania do ATT&CK
+3. Identyfikuje luki w obronie
+4. Ulepsza detekcję i procedury
+
+Przykład grupy:
+Mustang Panda (G0129)
+
+Typowe techniki:
+
+* phishing (Initial Access)
+* Scheduled Tasks (Persistence)
+* obfuscation (Defense Evasion)
+* tool transfer (Command & Control)
+
+---
+
+## 8. MITRE CAR (Cyber Analytics Repository)
+
+CAR to repozytorium gotowych analiz detekcyjnych.
+
+Zawiera:
+
+* opisy detekcji
+* pseudokod
+* zapytania SIEM (np. Splunk)
+* teorię działania analityki
+
+Cel:
+Przekład ATT&CK → realna detekcja.
+
+Przykład:
+CAR-2020-09-001
+Scheduled Task – File Access
+
+---
+
+## 9. MITRE D3FEND
+
+D3FEND opisuje **mechanizmy obrony**.
+
+ATT&CK = jak atakuje przeciwnik
+D3FEND = jak się bronić
+
+Macierz D3FEND zawiera 7 taktyk:
+
+* Model
+* Harden
+* Detect
+* Isolate
+* Deceive
+* Evict
+* Restore
+
+Przykład:
+Credential Rotation (D3-CRO)
+Regularna zmiana haseł ograniczająca wykorzystanie skradzionych danych.
+
+---
+
+## 10. MITRE Caldera
+
+Caldera to narzędzie do:
+
+* automatycznej symulacji ataków
+* emulacji przeciwnika
+* testowania detekcji
+* ćwiczeń Red/Blue Team
+
+Bazuje bezpośrednio na ATT&CK.
+
+---
+
+## 11. Adversary Emulation Plans
+
+Biblioteka scenariuszy ataków:
+
+* odwzorowanie realnych grup APT
+* instrukcje krok po kroku
+* testowanie odporności organizacji
+
+---
+
+## 12. Nowe Frameworki MITRE
+
+### AADAPT
+
+Framework dotyczący zagrożeń dla:
+
+* blockchain
+* kryptowalut
+* smart contracts
+* digital assets
+
+---
+
+### ATLAS
+
+Framework skupiony na atakach na:
+
+* AI
+* Machine Learning
+* modele sztucznej inteligencji
+
+---
+
+## 13. Najważniejszy Wniosek
+
+MITRE dostarcza kompletny ekosystem:
+
+ATT&CK → jak atakuje przeciwnik
+CAR → jak wykrywać
+D3FEND → jak się bronić
+Caldera → jak testować obronę
+
+Znajomość tych frameworków jest podstawą pracy w:
+SOC, Blue Team, Red Team oraz Threat Intelligence.

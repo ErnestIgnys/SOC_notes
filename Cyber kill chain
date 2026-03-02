@@ -1,0 +1,225 @@
+
+
+Cyber Kill Chain to model opisujący etapy cyberataku, opracowany w 2011 roku przez firmę Lockheed Martin na podstawie wojskowej koncepcji "kill chain".
+
+Model przedstawia kroki, które musi wykonać atakujący, aby skutecznie przeprowadzić atak.
+
+Zrozumienie Cyber Kill Chain pozwala:
+
+* wykrywać próby włamań
+* analizować cele atakującego
+* zapobiegać ransomware i APT
+* identyfikować luki bezpieczeństwa
+* przerywać atak na dowolnym etapie
+
+---
+
+## FAZY CYBER KILL CHAIN
+
+1. RECONNAISSANCE (ROZPOZNANIE)
+
+Faza zbierania informacji o celu.
+
+Atakujący analizuje:
+
+* infrastrukturę firmy
+* pracowników
+* technologie
+* procesy biznesowe
+* publicznie dostępne dane
+
+OSINT (Open Source Intelligence):
+pozyskiwanie informacji z publicznych źródeł.
+
+Źródła OSINT:
+
+* wyszukiwarki
+* media społecznościowe
+* fora internetowe
+* blogi
+* publiczne bazy danych
+* WHOIS
+
+Typy Recon:
+
+Passive Recon:
+
+* brak bezpośredniego kontaktu z celem
+* analiza danych publicznych
+
+Active Recon:
+
+* skanowanie portów
+* banner grabbing
+* social engineering
+* probing usług
+
+Przykładowe narzędzia:
+
+* theHarvester
+* Hunter.io
+* OSINT Framework
+
+---
+
+2. WEAPONIZATION (UZBROJENIE ATAKU)
+
+Przekształcenie zebranych informacji w narzędzia ataku.
+
+Pojęcia:
+Malware – złośliwe oprogramowanie
+Exploit – kod wykorzystujący podatność
+Payload – właściwy złośliwy kod
+
+Działania:
+
+* tworzenie dokumentów Office z makrami
+* przygotowanie payloadów
+* konfiguracja infrastruktury C2
+* instalacja backdoora
+* przygotowanie phishingu
+
+---
+
+3. DELIVERY (DOSTARCZENIE)
+
+Dostarczenie malware do ofiary.
+
+Metody:
+
+* phishing email
+* spear phishing
+* złośliwe załączniki
+* linki do malware
+* USB Drop Attack
+* watering hole attack
+* drive-by download
+
+---
+
+4. EXPLOITATION (WYKORZYSTANIE PODATNOŚCI)
+
+Uruchomienie kodu atakującego.
+
+Techniki:
+
+* malicious macros
+* zero-day exploits
+* wykorzystanie znanych CVE
+* eskalacja uprawnień
+* lateral movement
+
+Oznaki exploitation:
+
+* nietypowe procesy
+* zmiany rejestru
+* nowe usługi
+* podejrzane argumenty CLI
+
+---
+
+5. INSTALLATION (UTRZYMANIE DOSTĘPU)
+
+Instalacja trwałego dostępu (Persistence).
+
+Metody:
+
+Web Shell
+
+* skrypty ASP, PHP, JSP
+* utrzymanie dostępu do serwera
+
+Backdoor
+
+* np. Meterpreter
+
+Modyfikacja Windows Services
+
+* MITRE ATT&CK T1543.003
+* użycie sc.exe lub Registry
+
+Startup Persistence
+
+* Run Keys
+* Startup Folder
+
+Timestomping
+
+* manipulacja timestampami plików
+* utrudnianie analizy forensycznej
+
+---
+
+6. COMMAND AND CONTROL (C2)
+
+Utworzenie kanału komunikacji z przejętym systemem.
+
+C2 Beaconing:
+zainfekowany host regularnie komunikuje się z serwerem atakującego.
+
+Popularne kanały:
+
+* HTTP (port 80)
+* HTTPS (port 443)
+* DNS Tunneling
+
+Cel:
+
+* zdalne sterowanie systemem
+* dostarczanie kolejnych payloadów
+
+---
+
+7. ACTIONS ON OBJECTIVES
+
+Realizacja celu ataku.
+
+Możliwe działania:
+
+* kradzież danych
+* zbieranie credentiali
+* privilege escalation
+* internal reconnaissance
+* lateral movement
+* exfiltracja danych
+* usuwanie backupów
+* niszczenie danych
+
+---
+
+## ZALETY CYBER KILL CHAIN
+
+* strukturalne zrozumienie ataku
+* możliwość przerwania ataku na dowolnym etapie
+* poprawa strategii obrony
+* identyfikacja brakujących zabezpieczeń
+
+---
+
+## OGRANICZENIA MODELU
+
+Model nie był aktualizowany od 2011 roku.
+
+Problemy:
+
+* skupienie na malware i perymetrze sieci
+* brak wykrywania Insider Threats
+* nowoczesne ataki używają wielu TTP
+* łatwe obejście IOC (hash, IP)
+
+Insider Threat:
+zagrożenie wynikające z działań osoby posiadającej legalny dostęp.
+
+---
+
+## REKOMENDACJE
+
+Cyber Kill Chain nie powinien być używany samodzielnie.
+
+Zalecane uzupełnienie:
+
+* MITRE ATT&CK
+* Unified Kill Chain
+
+Cel obrony:
+zrozumieć działania przeciwnika i przerwać Kill Chain jak najwcześniej.
